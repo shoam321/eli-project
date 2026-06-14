@@ -6,6 +6,11 @@
  */
 
 module.exports = {
+  projectRoot: __dirname,
+  watchFolders: [__dirname],
+  resolver: {
+    extraNodeModules: {},
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
