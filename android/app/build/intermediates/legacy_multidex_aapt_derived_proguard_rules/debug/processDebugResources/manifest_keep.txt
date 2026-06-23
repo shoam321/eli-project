@@ -1,0 +1,4 @@
+# Referenced at /Volumes/Work/Work/fr/new/imobile/android/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:30
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+# Referenced at /Volumes/Work/Work/fr/new/imobile/android/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:30
+-keep class com.imobile.MainApplication { <init>(); }
