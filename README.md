@@ -1,105 +1,57 @@
-# Eli Project
+# iLab Manager Web
 
-iLab Mobile Manager - A React Native mobile application for managing business operations (orders, clients, inventory, etc.) on iOS and Android.
+Next.js web client for iLab Manager using TypeScript, Tailwind CSS, and Supabase.
 
-## Quick Start
+## Stack
 
-### Prerequisites
-- Node.js (v12+)
-- npm or yarn
-- React Native CLI
-- Android Studio (for Android development)
-- Xcode (for iOS development)
-
-### Installation
-
-```bash
-# Install dependencies
-npm install
-
-# Install pods for iOS
-cd ios
-pod install
-cd ..
-```
-
-### Development
-
-```bash
-# Start development server
-npm start
-
-# Run on Android
-npm run android
-
-# Run on iOS
-npm run ios
-
-# Run tests
-npm test
-
-# Lint code
-npm run lint
-```
+- Next.js (Pages Router)
+- TypeScript
+- Tailwind CSS v4
+- Supabase JavaScript client
 
 ## Project Structure
 
-See [APP_ARCHITECTURE_AND_UPDATES.md](APP_ARCHITECTURE_AND_UPDATES.md) for complete architecture documentation.
-
+```text
+ilab-web/
+	src/
+		components/
+			dashboard/
+			layout/
+		lib/
+			supabase/
+				client.ts
+				server.ts
+		pages/
+			api/
+			_app.tsx
+			_document.tsx
+			index.tsx
+		styles/
+			globals.css
+	.env.local.example
 ```
-src/
-├── actions/        # Redux action creators & API calls
-├── components/     # Reusable UI components
-├── reducers/       # Redux state management
-├── scenes/         # Screen/page components
-├── config/         # Configuration & constants
-├── lang/          # Internationalization
-└── utils/         # Helper functions
-```
 
-## Backend
+## Supabase Configuration
 
-API Endpoint: `https://app.ilabassistant.com/ApiForApp`
+1. Copy `.env.local.example` to `.env.local`.
+2. Add values from your Supabase project.
 
-Features:
-- User authentication with token-based security
-- Order, client, and inventory management
-- Firebase push notifications
-- Real-time data synchronization
-
-## Features
-
-- ✅ Cross-platform (iOS & Android)
-- ✅ Redux state management
-- ✅ Firebase integration
-- ✅ Offline support via AsyncStorage
-- ✅ Multi-language support
-- ✅ Gesture authentication
-- ✅ Camera integration
-- ✅ Signature capture
-
-## Building for Release
-
-### Android
 ```bash
-cd android
-./gradlew bundleRelease
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
 
-### iOS
+### Utilities
+
+- `src/lib/supabase/client.ts`: browser-safe client using public env vars.
+- `src/lib/supabase/server.ts`: server-only client using service role key.
+
+## Run Locally
+
 ```bash
-xcodebuild -workspace ios/imobile.xcworkspace \
-  -scheme imobile \
-  -configuration Release \
-  -derivedDataPath build
+npm install
+npm run dev
 ```
 
-See [APP_ARCHITECTURE_AND_UPDATES.md](APP_ARCHITECTURE_AND_UPDATES.md) for detailed deployment instructions.
-
-## Documentation
-
-- [APP_ARCHITECTURE_AND_UPDATES.md](APP_ARCHITECTURE_AND_UPDATES.md) - Complete architecture, backend system, and app store update guide
-
-## License
-
-Proprietary - All rights reserved
+Open `http://localhost:3000`.
