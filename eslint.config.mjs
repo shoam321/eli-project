@@ -12,6 +12,20 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Legacy React Native app and migration artifacts not used by the Next.js web app.
+    "android/**",
+    "ios/**",
+    "App.js",
+    "index.js",
+    "app.json",
+    "metro.config.js",
+    "ilabMobieManager-main/**",
+    "src/actions/**",
+    "src/config/**",
+    "src/lang/**",
+    "src/scenes/**",
+    "src/components/*.js",
+    "src/components/GesturePassword/**",
   ]),
 ]);
 
