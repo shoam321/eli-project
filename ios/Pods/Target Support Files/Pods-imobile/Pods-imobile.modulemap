@@ -1,0 +1,6 @@
+module Pods_imobile {
+  umbrella header "Pods-imobile-umbrella.h"
+
+  export *
+  module * { export * }
+}
