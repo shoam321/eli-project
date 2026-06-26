@@ -49,6 +49,38 @@ const WorkspaceContext = createContext<WorkspaceContextValue | null>(null);
 const EMPTY_STATE = createEmptyWorkspaceState();
 
 const moduleStorageAdapters: Record<ModuleSlug, ModuleStorageAdapter> = {
+  "products": {
+    table: "products",
+    fromRow: (row) => ({
+      id: toText(row.id),
+      createdAt: toTimestamp(row.created_at),
+      updatedAt: toTimestamp(row.updated_at),
+      name: toText(row.name),
+      description: toText(row.description),
+      category: toText(row.category),
+      price: toNumberOrEmpty(row.price),
+      quantity: toNumberOrEmpty(row.quantity),
+      imageUrl: toText(row.image_url),
+      clientId: toText(row.client_id),
+      status: toText(row.status),
+      notes: toText(row.notes),
+    }),
+    toRow: (record, userId) => ({
+      id: record.id,
+      owner_user_id: userId,
+      client_id: toNullableText(record.clientId),
+      name: toText(record.name),
+      description: toNullableText(record.description),
+      category: toNullableText(record.category),
+      price: toDecimalValue(record.price),
+      quantity: toNumberValue(record.quantity),
+      image_url: toNullableText(record.imageUrl),
+      status: toText(record.status) || "active",
+      notes: toNullableText(record.notes),
+      created_at: record.createdAt,
+      updated_at: record.updatedAt,
+    }),
+  },
   "projects": {
     table: "projects",
     fromRow: (row) => ({

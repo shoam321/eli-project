@@ -25,6 +25,7 @@ const en = {
   moduleCashier: "Cashier",
   moduleBrands: "Brands",
   moduleModels: "Models",
+  moduleProducts: "Products",
 
   // Module subtitles
   moduleProjectsSubtitle: "Repair, intake, and delivery tracking.",
@@ -37,6 +38,7 @@ const en = {
   moduleCashierSubtitle: "Point-of-sale and sales history workspace.",
   moduleBrandsSubtitle: "Reference catalog for intake and parts.",
   moduleModelsSubtitle: "Device model catalog for brands.",
+  moduleProductsSubtitle: "Product catalog with images and client associations.",
 
   // Module descriptions
   moduleProjectsDesc: "Manage active work orders, due dates, and customer device progress.",
@@ -49,6 +51,7 @@ const en = {
   moduleCashierDesc: "Record quick counter sales for devices and parts while the backend migration is offline.",
   moduleBrandsDesc: "Keep the device and part brand list ready for future backend sync.",
   moduleModelsDesc: "Manage the device model list used by intake, parts, and future automations.",
+  moduleProductsDesc: "Manage your product catalog, link products to clients, and track inventory.",
 
   // Auth gate
   preparingWorkspace: "Preparing your synced workspace",
@@ -134,8 +137,7 @@ const en = {
   resetError: "Unable to reset the workspace.",
 
   // Misc UI
-  retryConnection: "Retry Connection",
-  unknownAccount: "Unknown account",
+  retryConnection: "Retry Connection",  unknownAccount: "Unknown account",
   unknown: "Unknown",
   emailPlaceholder: "your@email.com",
   passwordPlaceholder: "At least 6 characters",
@@ -150,6 +152,39 @@ const en = {
   unableToDelete: "Unable to delete this record.",
   yesLabel: "Yes",
   noLabel: "No",
+
+  // Products
+  productName: "Product Name",
+  productCategory: "Category",
+  productImage: "Product Image",
+  productDescription: "Description",
+  linkToClient: "Link to Client",
+  noClientLinked: "No client linked",
+  selectClient: "Select a client...",
+  uploadImage: "Upload Image",
+  uploading: "Uploading...",
+  changeImage: "Change Image",
+  removeImage: "Remove",
+  imagePreview: "Image preview",
+  productStatus: "Status",
+  productStatusActive: "Active",
+  productStatusInactive: "Inactive",
+  priceLabel: "Price (₪)",
+  quantityLabel: "Quantity",
+  productNotesLabel: "Internal Notes",
+
+  // Payment (HYP)
+  processPayment: "Process Payment",
+  paymentModal: "Process Payment",
+  paymentAmount: "Amount (₪)",
+  paymentDescription: "Description",
+  paymentPhone: "Customer Phone (optional)",
+  initiatePayment: "Pay Now",
+  paymentSuccess: "Payment session created — customer will be redirected.",
+  paymentError: "Payment failed. Please try again.",
+  paymentPending: "HYP credentials not configured — payment scaffold ready.",
+  hypPayment: "HYP Payment",
+  paymentFor: "Payment for:",
 
   // Language switcher
   languageSwitcher: "עברית",
@@ -180,6 +215,7 @@ const he: typeof en = {
   moduleCashier: "קופה",
   moduleBrands: "מותגים",
   moduleModels: "דגמים",
+  moduleProducts: "מוצרים",
 
   // Module subtitles
   moduleProjectsSubtitle: "מעקב קליטה, תיקון ומסירה.",
@@ -192,6 +228,7 @@ const he: typeof en = {
   moduleCashierSubtitle: "נקודת מכירה והיסטוריית מכירות.",
   moduleBrandsSubtitle: "קטלוג עיון לקליטה וחלקים.",
   moduleModelsSubtitle: "קטלוג דגמי מכשירים לפי מותג.",
+  moduleProductsSubtitle: "קטלוג מוצרים עם תמונות ושיוך ללקוחות.",
 
   // Module descriptions
   moduleProjectsDesc: "ניהול הזמנות עבודה פעילות, תאריכי יעד ומעקב מכשיר לקוח.",
@@ -204,6 +241,7 @@ const he: typeof en = {
   moduleCashierDesc: "תיעוד מכירות דלפק מהירות למכשירים ולחלקים.",
   moduleBrandsDesc: "שמירת רשימת המותגים למכשירים ולחלקים לסנכרון עתידי.",
   moduleModelsDesc: "ניהול רשימת דגמי המכשירים לשימוש בקליטה, חלקים ואוטומציות.",
+  moduleProductsDesc: "ניהול קטלוג המוצרים, שיוך מוצרים ללקוחות ומעקב מלאי.",
 
   // Auth gate
   preparingWorkspace: "מכין סביבת עבודה מסונכרנת",
@@ -305,6 +343,39 @@ const he: typeof en = {
   unableToDelete: "לא ניתן למחוק רשומה זו.",
   yesLabel: "כן",
   noLabel: "לא",
+
+  // Products
+  productName: "שם מוצר",
+  productCategory: "קטגוריה",
+  productImage: "תמונת מוצר",
+  productDescription: "תיאור",
+  linkToClient: "שייך ללקוח",
+  noClientLinked: "ללא לקוח משויך",
+  selectClient: "בחר לקוח...",
+  uploadImage: "העלה תמונה",
+  uploading: "...מעלה",
+  changeImage: "החלף תמונה",
+  removeImage: "הסר",
+  imagePreview: "תצוגה מקדימה",
+  productStatus: "סטטוס",
+  productStatusActive: "פעיל",
+  productStatusInactive: "לא פעיל",
+  priceLabel: "מחיר (₪)",
+  quantityLabel: "כמות",
+  productNotesLabel: "הערות פנימיות",
+
+  // Payment (HYP)
+  processPayment: "גבה תשלום",
+  paymentModal: "גביית תשלום",
+  paymentAmount: "סכום (₪)",
+  paymentDescription: "תיאור",
+  paymentPhone: "טלפון לקוח (אופציונלי)",
+  initiatePayment: "שלם עכשיו",
+  paymentSuccess: "סשן תשלום נוצר — הלקוח יועבר לדף התשלום.",
+  paymentError: "התשלום נכשל. נסה שוב.",
+  paymentPending: "אישורי HYP לא הוגדרו — תשתית התשלום מוכנה.",
+  hypPayment: "תשלום HYP",
+  paymentFor: "תשלום עבור:",
 
   // Language switcher
   languageSwitcher: "English",

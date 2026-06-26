@@ -1,4 +1,5 @@
 export type ModuleSlug =
+  | "products"
   | "projects"
   | "draft-projects"
   | "clients"
@@ -84,12 +85,38 @@ export const moduleOrder: ModuleSlug[] = [
   "parts",
   "orders",
   "devices",
+  "products",
   "cashiers",
   "brands",
   "models",
 ];
 
 export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
+  "products": {
+    slug: "products",
+    title: "Products",
+    subtitle: "Product catalog with images and client associations.",
+    description: "Manage your product catalog, link products to clients, and track inventory.",
+    emptyMessage: "No products are stored in the workspace yet.",
+    singular: "Product",
+    navGroup: "operations",
+    fields: [
+      { key: "name", label: "Product Name", type: "text", required: true, placeholder: "Product name" },
+      { key: "category", label: "Category", type: "text", placeholder: "e.g. Screen, Battery" },
+      { key: "price", label: "Price", type: "currency", required: true, placeholder: "0.00" },
+      { key: "quantity", label: "Quantity", type: "number", placeholder: "0" },
+      { key: "imageUrl", label: "Image URL", type: "text", placeholder: "" },
+      { key: "clientId", label: "Linked Client", type: "text", placeholder: "" },
+      { key: "description", label: "Description", type: "textarea", placeholder: "Product description" },
+      { key: "notes", label: "Notes", type: "textarea", placeholder: "Internal notes" },
+    ],
+    columns: [
+      { key: "name", label: "Product" },
+      { key: "category", label: "Category" },
+      { key: "price", label: "Price" },
+      { key: "quantity", label: "Qty" },
+    ],
+  },
   "projects": {
     slug: "projects",
     title: "Projects",

@@ -18,6 +18,24 @@ type ModuleOverride = {
 };
 
 const heOverrides: Record<ModuleSlug, ModuleOverride> = {
+  products: {
+    title: "מוצרים",
+    subtitle: "קטלוג מוצרים עם תמונות ושיוך ללקוחות.",
+    description: "ניהול קטלוג המוצרים, שיוך מוצרים ללקוחות ומעקב מלאי.",
+    emptyMessage: "עדיין לא נשמרו מוצרים בסביבת העבודה.",
+    singular: "מוצר",
+    fields: {
+      name: { label: "שם מוצר", placeholder: "שם המוצר" },
+      category: { label: "קטגוריה", placeholder: "למשל: מסך, סוללה" },
+      price: { label: "מחיר (₪)", placeholder: "0.00" },
+      quantity: { label: "כמות", placeholder: "0" },
+      imageUrl: { label: "תמונה" },
+      clientId: { label: "לקוח משויך" },
+      description: { label: "תיאור", placeholder: "תיאור המוצר" },
+      notes: { label: "הערות פנימיות", placeholder: "הערות פנימיות" },
+    },
+    columns: { name: "מוצר", category: "קטגוריה", price: "מחיר", quantity: "כמות" },
+  },
   projects: {
     title: "תיקונים",
     subtitle: "מעקב קליטה, תיקון ומסירה.",
