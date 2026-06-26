@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 
+import { useLanguage } from "@/lib/language-context";
 import { type ModuleDefinition, type ModuleField } from "@/lib/module-config";
 import {
   buildDefaultDraft,
@@ -16,6 +17,7 @@ type OperationsModulePageProps = {
 export default function OperationsModulePage({ moduleConfig }: OperationsModulePageProps) {
   const { deleteRecord, isBusy, saveRecord } = useWorkspace();
   const workspaceState = useWorkspaceState();
+  const { t } = useLanguage();
   const [query, setQuery] = useState("");
   const [draft, setDraft] = useState<WorkspaceRecord | null>(null);
   const records = workspaceState[moduleConfig.slug];
@@ -86,24 +88,24 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[1.4fr_0.8fr]">
         <div className="rounded-[2rem] border border-white/60 bg-white/80 p-6 shadow-[0_30px_120px_-50px_rgba(15,23,42,0.34)] backdrop-blur">
-          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">Original Surface</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">{t("originalSurface")}</p>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{moduleConfig.title}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">{moduleConfig.description}</p>
         </div>
         <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-slate-100 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.75)]">
-          <p className="text-xs uppercase tracking-[0.26em] text-teal-300">Workspace Stats</p>
+          <p className="text-xs uppercase tracking-[0.26em] text-teal-300">{t("workspaceStats")}</p>
           <div className="mt-4 grid gap-3 text-sm text-slate-300">
             <div className="flex items-center justify-between gap-4">
-              <span>Stored records</span>
+              <span>{t("storedRecords")}</span>
               <span className="text-lg font-semibold text-white">{records.length}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span>Visible after filter</span>
+              <span>{t("visibleAfterFilter")}</span>
               <span className="text-lg font-semibold text-white">{filteredRecords.length}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span>Persistence mode</span>
-              <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-teal-200">Supabase workspace</span>
+              <span>{t("persistenceMode")}</span>
+              <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-teal-200">{t("supabaseWorkspace")}</span>
             </div>
           </div>
         </div>
@@ -112,11 +114,11 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
       <section className="rounded-[2rem] border border-slate-200 bg-white/85 p-5 shadow-[0_24px_80px_-52px_rgba(15,23,42,0.42)] backdrop-blur">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-1 flex-col gap-2 md:max-w-xl">
-            <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Search records</label>
+            <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">{t("searchRecords")}</label>
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder={`Search ${moduleConfig.title.toLowerCase()}`}
+              placeholder={`${t("search")} ${moduleConfig.title.toLowerCase()}`}
               className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white"
             />
           </div>
@@ -126,7 +128,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
             disabled={isBusy}
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
           >
-            Add {singularize(moduleConfig.title)}
+            {t("add")} {singularize(moduleConfig.title)}
           </button>
         </div>
 
@@ -144,7 +146,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
                     </th>
                   ))}
                   <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    Actions
+                    {t("actions")}
                   </th>
                 </tr>
               </thead>
@@ -171,7 +173,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
                             disabled={isBusy}
                             className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-teal-300 hover:text-teal-700"
                           >
-                            Edit
+                            {t("edit")}
                           </button>
                           <button
                             type="button"
@@ -181,7 +183,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
                             disabled={isBusy}
                             className="rounded-full border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
                           >
-                            Delete
+                            {t("delete")}
                           </button>
                         </div>
                       </td>
@@ -198,9 +200,9 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
         <section className="rounded-[2rem] border border-teal-200 bg-white/90 p-6 shadow-[0_24px_90px_-54px_rgba(13,148,136,0.42)]">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">Record Editor</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">{t("recordEditor")}</p>
               <h3 className="mt-1 text-2xl font-semibold text-slate-900">
-                {draft.id ? `Edit ${singularize(moduleConfig.title)}` : `Add ${singularize(moduleConfig.title)}`}
+                {draft.id ? `${t("editRecord")} ${singularize(moduleConfig.title)}` : `${t("addRecord")} ${singularize(moduleConfig.title)}`}
               </h3>
             </div>
             <button
@@ -208,7 +210,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
               onClick={closeForm}
               className="rounded-full border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
             >
-              Close
+              {t("close")}
             </button>
           </div>
 
@@ -228,7 +230,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
               disabled={isBusy}
               className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
             >
-              {isBusy ? "Saving..." : `Save ${singularize(moduleConfig.title)}`}
+              {isBusy ? t("saving") : `${t("save")} ${singularize(moduleConfig.title)}`}
             </button>
             <button
               type="button"
@@ -236,7 +238,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
               disabled={isBusy}
               className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
             >
-              Cancel
+              {t("cancel")}
             </button>
           </div>
         </section>
@@ -295,7 +297,7 @@ function renderField({
           onChange={(event) => onChange(field, event.target.checked)}
           className="size-4 rounded border-slate-300 text-teal-600"
         />
-        <span>Enable this item in the workspace.</span>
+        <span>{t("enableItem")}</span>
       </span>
     );
   }
