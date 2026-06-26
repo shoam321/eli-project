@@ -12,7 +12,7 @@ const moduleSlugToTitleKey: Record<string, string> = {
   parts: "moduleParts",
   orders: "moduleOrders",
   devices: "moduleDevices",
-  cashier: "moduleCashier",
+  cashiers: "moduleCashier",
   brands: "moduleBrands",
   models: "moduleModels",
 };
@@ -25,9 +25,22 @@ const moduleSlugToSubtitleKey: Record<string, string> = {
   parts: "modulePartsSubtitle",
   orders: "moduleOrdersSubtitle",
   devices: "moduleDevicesSubtitle",
-  cashier: "moduleCashierSubtitle",
+  cashiers: "moduleCashierSubtitle",
   brands: "moduleBrandsSubtitle",
   models: "moduleModelsSubtitle",
+};
+
+const moduleSlugToDescKey: Record<string, string> = {
+  projects: "moduleProjectsDesc",
+  "draft-projects": "moduleDraftProjectsDesc",
+  clients: "moduleClientsDesc",
+  suppliers: "moduleSuppliersDesc",
+  parts: "modulePartsDesc",
+  orders: "moduleOrdersDesc",
+  devices: "moduleDevicesDesc",
+  cashiers: "moduleCashierDesc",
+  brands: "moduleBrandsDesc",
+  models: "moduleModelsDesc",
 };
 
 export default function OperationsDashboard() {
@@ -125,8 +138,10 @@ function ModuleSection({
           const count = state?.[slug]?.length ?? 0;
           const titleKey = moduleSlugToTitleKey[slug];
           const subtitleKey = moduleSlugToSubtitleKey[slug];
+          const descKey = moduleSlugToDescKey[slug];
           const translatedTitle = titleKey ? t(titleKey as Parameters<typeof t>[0]) : moduleConfig.title;
           const translatedSubtitle = subtitleKey ? t(subtitleKey as Parameters<typeof t>[0]) : moduleConfig.subtitle;
+          const translatedDesc = descKey ? t(descKey as Parameters<typeof t>[0]) : moduleConfig.description;
 
           return (
             <Link
@@ -147,7 +162,7 @@ function ModuleSection({
                   {count}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-600">{moduleConfig.description}</p>
+              <p className="mt-3 text-sm leading-6 text-slate-600">{translatedDesc}</p>
               <p className="mt-4 text-sm font-medium text-slate-700">{translatedSubtitle}</p>
             </Link>
           );

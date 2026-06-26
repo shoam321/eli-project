@@ -21,7 +21,7 @@ const moduleSlugToTranslationKey: Record<string, string> = {
   parts: "moduleParts",
   orders: "moduleOrders",
   devices: "moduleDevices",
-  cashier: "moduleCashier",
+  cashiers: "moduleCashier",
   brands: "moduleBrands",
   models: "moduleModels",
 };

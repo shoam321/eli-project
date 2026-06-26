@@ -38,6 +38,18 @@ const en = {
   moduleBrandsSubtitle: "Reference catalog for intake and parts.",
   moduleModelsSubtitle: "Device model catalog for brands.",
 
+  // Module descriptions
+  moduleProjectsDesc: "Manage active work orders, due dates, and customer device progress.",
+  moduleDraftProjectsDesc: "Hold early intake records before they become fully active projects.",
+  moduleClientsDesc: "Track the people and companies tied to service work and orders.",
+  moduleSuppliersDesc: "Store the vendors you order from and their preferred channels.",
+  modulePartsDesc: "Keep replacement parts, stock levels, and supplier references in one place.",
+  moduleOrdersDesc: "Track purchase orders, expected parts, and supplier receipts.",
+  moduleDevicesDesc: "Track intake devices, temporary loaners, and internal hardware.",
+  moduleCashierDesc: "Record quick counter sales for devices and parts while the backend migration is offline.",
+  moduleBrandsDesc: "Keep the device and part brand list ready for future backend sync.",
+  moduleModelsDesc: "Manage the device model list used by intake, parts, and future automations.",
+
   // Auth gate
   preparingWorkspace: "Preparing your synced workspace",
   loadingSession: "Loading the authenticated session and workspace records from Supabase.",
@@ -162,6 +174,18 @@ const he: typeof en = {
   moduleCashierSubtitle: "נקודת מכירה והיסטוריית מכירות.",
   moduleBrandsSubtitle: "קטלוג עיון לקליטה וחלקים.",
   moduleModelsSubtitle: "קטלוג דגמי מכשירים לפי מותג.",
+
+  // Module descriptions
+  moduleProjectsDesc: "ניהול הזמנות עבודה פעילות, תאריכי יעד ומעקב מכשיר לקוח.",
+  moduleDraftProjectsDesc: "שמירת רשומות קליטה ראשוניות לפני שהופכות לפרויקטים פעילים.",
+  moduleClientsDesc: "מעקב אחר אנשים וחברות המחוברים לעבודות שירות והזמנות.",
+  moduleSuppliersDesc: "שמירת פרטי ספקים וערוצי ההתקשרות המועדפים.",
+  modulePartsDesc: "ניהול חלקי חילוף, מלאי ורשימות ספקים במקום אחד.",
+  moduleOrdersDesc: "מעקב אחר הזמנות רכש, חלקים צפויים וקבלות ספקים.",
+  moduleDevicesDesc: "מעקב מכשירי קליטה, השאלות זמניות וחומרה פנימית.",
+  moduleCashierDesc: "תיעוד מכירות דלפק מהירות למכשירים ולחלקים.",
+  moduleBrandsDesc: "שמירת רשימת המותגים למכשירים ולחלקים לסנכרון עתידי.",
+  moduleModelsDesc: "ניהול רשימת דגמי המכשירים לשימוש בקליטה, חלקים ואוטומציות.",
 
   // Auth gate
   preparingWorkspace: "מכין סביבת עבודה מסונכרנת",
