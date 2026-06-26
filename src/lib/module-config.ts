@@ -44,6 +44,7 @@ export type ModuleDefinition = {
   subtitle: string;
   description: string;
   emptyMessage: string;
+  singular: string;
   navGroup: "operations" | "reference";
   fields: ModuleField[];
   columns: ModuleColumn[];
@@ -95,6 +96,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Repair, intake, and delivery tracking.",
     description: "Manage active work orders, due dates, and customer device progress.",
     emptyMessage: "No projects have been created in the web workspace yet.",
+    singular: "Project",
     navGroup: "operations",
     fields: [
       { key: "customerName", label: "Customer", type: "text", required: true, placeholder: "Full customer name" },
@@ -118,6 +120,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Unconfirmed intake and pending estimates.",
     description: "Hold early intake records before they become fully active projects.",
     emptyMessage: "No draft projects are stored in the web workspace yet.",
+    singular: "Draft Project",
     navGroup: "operations",
     fields: [
       { key: "customerName", label: "Customer", type: "text", required: true, placeholder: "Full customer name" },
@@ -144,6 +147,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Customer records and contact history.",
     description: "Track the people and companies tied to service work and orders.",
     emptyMessage: "No clients are stored in the web workspace yet.",
+    singular: "Client",
     navGroup: "operations",
     fields: [
       { key: "firstName", label: "First Name", type: "text", required: true, placeholder: "First name" },
@@ -166,6 +170,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Parts vendors and purchasing contacts.",
     description: "Store the vendors you order from and their preferred channels.",
     emptyMessage: "No suppliers are stored in the web workspace yet.",
+    singular: "Supplier",
     navGroup: "operations",
     fields: [
       { key: "name", label: "Supplier", type: "text", required: true, placeholder: "Supplier name" },
@@ -187,6 +192,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Inventory, pricing, and supplier sourcing.",
     description: "Keep replacement parts, stock levels, and supplier references in one place.",
     emptyMessage: "No parts are stored in the web workspace yet.",
+    singular: "Part",
     navGroup: "operations",
     fields: [
       { key: "name", label: "Part Name", type: "text", required: true, placeholder: "Screen assembly" },
@@ -210,6 +216,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Purchasing pipeline and receiving status.",
     description: "Track purchase orders, expected parts, and supplier receipts.",
     emptyMessage: "No orders are stored in the web workspace yet.",
+    singular: "Order",
     navGroup: "operations",
     fields: [
       { key: "orderNumber", label: "Order Number", type: "text", required: true, placeholder: "PO-1024" },
@@ -233,6 +240,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Customer, temporary, and company devices.",
     description: "Track intake devices, temporary loaners, and internal hardware.",
     emptyMessage: "No devices are stored in the web workspace yet.",
+    singular: "Device",
     navGroup: "operations",
     fields: [
       { key: "brand", label: "Brand", type: "text", required: true, placeholder: "Apple" },
@@ -255,6 +263,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Point-of-sale and sales history workspace.",
     description: "Record quick counter sales for devices and parts while the backend migration is offline.",
     emptyMessage: "No cashier entries are stored in the web workspace yet.",
+    singular: "Cashier Entry",
     navGroup: "operations",
     fields: [
       { key: "itemName", label: "Item", type: "text", required: true, placeholder: "Used iPhone 12" },
@@ -277,6 +286,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Reference catalog for intake and parts.",
     description: "Keep the device and part brand list ready for future backend sync.",
     emptyMessage: "No brands are stored in the web workspace yet.",
+    singular: "Brand",
     navGroup: "reference",
     fields: [
       { key: "name", label: "Brand", type: "text", required: true, placeholder: "Apple" },
@@ -295,6 +305,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
     subtitle: "Reference catalog for supported hardware.",
     description: "Manage the device model list used by intake, parts, and future automations.",
     emptyMessage: "No models are stored in the web workspace yet.",
+    singular: "Model",
     navGroup: "reference",
     fields: [
       { key: "brand", label: "Brand", type: "text", required: true, placeholder: "Apple" },

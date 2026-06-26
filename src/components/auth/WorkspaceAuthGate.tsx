@@ -46,7 +46,7 @@ export default function WorkspaceAuthGate() {
           <div className="mb-4 flex justify-end">
             <LanguageSwitcher />
           </div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700">Supabase Workspace</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700">{t("supabaseWorkspaceLabel")}</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{t("preparingWorkspace")}</h1>
           <p className="mt-4 text-sm leading-6 text-slate-600">
             {t("loadingSession")}
@@ -92,7 +92,7 @@ export default function WorkspaceAuthGate() {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
+                placeholder={t("emailPlaceholder")}
                 className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white"
                 required
               />
@@ -104,7 +104,7 @@ export default function WorkspaceAuthGate() {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="At least 6 characters"
+                placeholder={t("passwordPlaceholder")}
                 className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white"
                 minLength={6}
                 required
@@ -149,7 +149,7 @@ export default function WorkspaceAuthGate() {
                 disabled={isBusy}
                 className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Retry Connection
+                {t("retryConnection")}
               </button>
             </div>
           </form>

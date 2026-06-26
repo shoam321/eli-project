@@ -133,6 +133,24 @@ const en = {
   resetConfirm: "Reset all Supabase workspace records for the signed-in account?",
   resetError: "Unable to reset the workspace.",
 
+  // Misc UI
+  retryConnection: "Retry Connection",
+  unknownAccount: "Unknown account",
+  unknown: "Unknown",
+  emailPlaceholder: "your@email.com",
+  passwordPlaceholder: "At least 6 characters",
+  supabaseWorkspaceLabel: "Supabase Workspace",
+  dashboardTitle: "Operations Dashboard",
+  dashboardSubtitle: "Daily modules for projects, clients, suppliers, inventory, orders, devices, cashier, brands, and models.",
+
+  // Alerts / confirms
+  fieldRequiredSuffix: " is required.",
+  unableToSave: "Unable to save this record.",
+  deleteRecordConfirm: "Delete this record?",
+  unableToDelete: "Unable to delete this record.",
+  yesLabel: "Yes",
+  noLabel: "No",
+
   // Language switcher
   languageSwitcher: "עברית",
 };
@@ -269,6 +287,24 @@ const he: typeof en = {
   resetting: "...מאפס",
   resetConfirm: "לאפס את כל רשומות סביבת העבודה עבור החשבון המחובר?",
   resetError: "לא ניתן לאפס את סביבת העבודה.",
+
+  // Misc UI
+  retryConnection: "נסה שוב",
+  unknownAccount: "חשבון לא ידוע",
+  unknown: "לא ידוע",
+  emailPlaceholder: 'האימייל שלך',
+  passwordPlaceholder: "לפחות 6 תווים",
+  supabaseWorkspaceLabel: "סביבת Supabase",
+  dashboardTitle: "לוח בקרה",
+  dashboardSubtitle: "מודולים יומיים לתיקונים, לקוחות, ספקים, מלאי, הזמנות, מכשירים, קופה, מותגים ודגמים.",
+
+  // Alerts / confirms
+  fieldRequiredSuffix: " הינו שדה חובה.",
+  unableToSave: "לא ניתן לשמור רשומה זו.",
+  deleteRecordConfirm: "למחוק רשומה זו?",
+  unableToDelete: "לא ניתן למחוק רשומה זו.",
+  yesLabel: "כן",
+  noLabel: "לא",
 
   // Language switcher
   languageSwitcher: "English",

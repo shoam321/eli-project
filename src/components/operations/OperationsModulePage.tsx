@@ -59,7 +59,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
       const value = draft[field.key];
 
       if (field.required && String(value ?? "").trim() === "") {
-        window.alert(`${field.label} is required.`);
+        window.alert(`${field.label}${t("fieldRequiredSuffix")}`);
         return;
       }
     }
@@ -68,19 +68,19 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
       await saveRecord(moduleConfig.slug, draft);
       closeForm();
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Unable to save this record.");
+      window.alert(error instanceof Error ? error.message : t("unableToSave"));
     }
   }
 
   async function removeRecord(recordId: string) {
-    if (!window.confirm(`Delete this ${moduleConfig.title.toLowerCase().slice(0, -1)} record?`)) {
+    if (!window.confirm(t("deleteRecordConfirm"))) {
       return;
     }
 
     try {
       await deleteRecord(moduleConfig.slug, recordId);
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Unable to delete this record.");
+      window.alert(error instanceof Error ? error.message : t("unableToDelete"));
     }
   }
 
@@ -128,7 +128,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
             disabled={isBusy}
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
           >
-            {t("add")} {singularize(moduleConfig.title)}
+            {t("add")} {moduleConfig.singular}
           </button>
         </div>
 
@@ -162,7 +162,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
                     <tr key={record.id} className="align-top">
                       {moduleConfig.columns.map((column) => (
                         <td key={column.key} className="px-4 py-4 text-sm text-slate-700">
-                          {formatRecordValue(record[column.key])}
+                          {formatRecordValue(record[column.key], t)}
                         </td>
                       ))}
                       <td className="px-4 py-4 text-right">
@@ -202,7 +202,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">{t("recordEditor")}</p>
               <h3 className="mt-1 text-2xl font-semibold text-slate-900">
-                {draft.id ? `${t("editRecord")} ${singularize(moduleConfig.title)}` : `${t("addRecord")} ${singularize(moduleConfig.title)}`}
+                {draft.id ? `${t("editRecord")} ${moduleConfig.singular}` : `${t("addRecord")} ${moduleConfig.singular}`}
               </h3>
             </div>
             <button
@@ -230,7 +230,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
               disabled={isBusy}
               className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
             >
-              {isBusy ? t("saving") : `${t("save")} ${singularize(moduleConfig.title)}`}
+              {isBusy ? t("saving") : `${t("save")} ${moduleConfig.singular}`}
             </button>
             <button
               type="button"
@@ -318,9 +318,12 @@ function renderField({
   );
 }
 
-function formatRecordValue(value: WorkspaceRecord[string]) {
+function formatRecordValue(
+  value: WorkspaceRecord[string],
+  t: (key: import("@/lib/translations").TranslationKey) => string,
+) {
   if (typeof value === "boolean") {
-    return value ? "Yes" : "No";
+    return value ? t("yesLabel") : t("noLabel");
   }
 
   if (value === "") {
@@ -328,16 +331,4 @@ function formatRecordValue(value: WorkspaceRecord[string]) {
   }
 
   return String(value ?? "-");
-}
-
-function singularize(title: string) {
-  if (title.endsWith("ies")) {
-    return `${title.slice(0, -3)}y`;
-  }
-
-  if (title.endsWith("s")) {
-    return title.slice(0, -1);
-  }
-
-  return title;
 }

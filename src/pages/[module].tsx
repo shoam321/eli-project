@@ -5,14 +5,14 @@ import { useRouter } from "next/router";
 import OperationsModulePage from "@/components/operations/OperationsModulePage";
 import AppShell from "@/components/layout/AppShell";
 import { useLanguage } from "@/lib/language-context";
-import { getModuleDefinition } from "@/lib/module-config";
+import { useLocalizedModuleConfig } from "@/lib/module-i18n";
 
 const ModulePage: NextPage = () => {
   const router = useRouter();
   const { t } = useLanguage();
   const moduleParam = router.query.module;
   const slug = Array.isArray(moduleParam) ? moduleParam[0] : moduleParam ?? "";
-  const moduleConfig = getModuleDefinition(slug);
+  const moduleConfig = useLocalizedModuleConfig(slug);
 
   if (!moduleConfig) {
     return (

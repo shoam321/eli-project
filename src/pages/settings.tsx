@@ -51,7 +51,7 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between gap-4">
               <span>{t("signedInOperator")}</span>
               <span className="truncate rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-white">
-                {session?.user.email ?? "Unknown"}
+                {session?.user.email ?? t("unknown")}
               </span>
             </div>
           </div>

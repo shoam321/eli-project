@@ -1,11 +1,14 @@
 import AppShell from "@/components/layout/AppShell";
 import OperationsDashboard from "@/components/operations/OperationsDashboard";
+import { useLanguage } from "@/lib/language-context";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <AppShell
-      title="Operations Dashboard"
-      subtitle="Restored product modules for projects, orders, clients, suppliers, inventory, devices, and cashier workflows."
+      title={t("dashboardTitle")}
+      subtitle={t("dashboardSubtitle")}
       activePath="/"
     >
       <OperationsDashboard />

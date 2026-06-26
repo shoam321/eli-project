@@ -64,7 +64,7 @@ export default function AppShell({ title, subtitle, activePath, children }: AppS
             </p>
             <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
               <p className="font-medium text-white">{t("signedInAs")}</p>
-              <p className="mt-1 break-all">{sessionUser?.email ?? sessionUser?.id ?? "Unknown account"}</p>
+              <p className="mt-1 break-all">{sessionUser?.email ?? sessionUser?.id ?? t("unknownAccount")}</p>
             </div>
           </div>
 
