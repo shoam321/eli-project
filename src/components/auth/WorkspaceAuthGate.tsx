@@ -65,15 +65,11 @@ export default function WorkspaceAuthGate() {
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
         <section className="rounded-[2.2rem] border border-slate-200 bg-slate-950/96 p-8 text-slate-100 shadow-[0_42px_130px_-70px_rgba(15,23,42,0.88)]">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-300">{t("brandName")}</p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">{t("supabaseNowPrimary")}</h1>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white">{t("workspaceTitle")}</h1>
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            {t("authGateDesc")}
+            {t("workspaceSubtitle")}
           </p>
           <div className="mt-8 grid gap-3 text-sm text-slate-300">
-            <div className="flex items-center justify-between gap-4 rounded-full bg-white/5 px-4 py-3">
-              <span>{t("legacyApi")}</span>
-              <span className="rounded-full bg-amber-500/15 px-2 py-1 text-xs font-medium text-amber-300">{t("offline")}</span>
-            </div>
             <div className="flex items-center justify-between gap-4 rounded-full bg-white/5 px-4 py-3">
               <span>{t("supabaseSchema")}</span>
               <span className="rounded-full bg-emerald-500/15 px-2 py-1 text-xs font-medium text-emerald-300">{t("live")}</span>
@@ -88,9 +84,6 @@ export default function WorkspaceAuthGate() {
         <section className="rounded-[2.2rem] border border-white/60 bg-white/86 p-8 shadow-[0_36px_130px_-72px_rgba(15,23,42,0.4)] backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700">{t("accessWorkspace")}</p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{t("signIn")}</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-600">
-            {t("authGateDesc")}
-          </p>
 
           <form className="mt-8 space-y-4" onSubmit={handleSignIn}>
             <label className="block">

@@ -33,25 +33,12 @@ export default function SettingsPage() {
   return (
     <AppShell title={t("settingsTitle")} subtitle={t("settingsSubtitle")} activePath="/settings">
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <section className="rounded-[2rem] border border-white/60 bg-white/85 p-6 shadow-[0_28px_100px_-52px_rgba(15,23,42,0.35)] backdrop-blur">
-          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">{t("backendReality")}</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{t("backendRealityTitle")}</h2>
-          <div className="mt-4 space-y-4 text-sm leading-6 text-slate-600">
-            <p>{t("backendRealityDesc1")}</p>
-            <p>{t("backendRealityDesc2")}</p>
-          </div>
-        </section>
-
         <section className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-slate-100 shadow-[0_28px_100px_-52px_rgba(15,23,42,0.7)]">
           <p className="text-xs uppercase tracking-[0.26em] text-teal-300">{t("workspaceHealth")}</p>
           <div className="mt-5 grid gap-3 text-sm text-slate-300">
             <div className="flex items-center justify-between gap-4">
               <span>{t("totalSyncedRecords")}</span>
               <span className="text-lg font-semibold text-white">{totalRecords}</span>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <span>{t("customRestBackend")}</span>
-              <span className="rounded-full bg-amber-500/15 px-2 py-1 text-xs font-medium text-amber-300">{t("offline")}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span>{t("supabasePublicEnv")}</span>

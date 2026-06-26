@@ -57,10 +57,10 @@ export default function OperationsDashboard() {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-2xl space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700">
-              {t("migrationWorkspace")}
+              {t("brandName")}
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
-              {t("modulesBackOnline")}
+              {t("workspaceTitle")}
             </h2>
             <p className="text-sm leading-6 text-slate-600">
               {t("dashboardDesc")} {session?.user.email ?? t("workspaceTitle")}.
@@ -72,10 +72,6 @@ export default function OperationsDashboard() {
               <div className="flex items-center justify-between gap-4">
                 <span>{t("webDeployment")}</span>
                 <span className="rounded-full bg-emerald-500/15 px-2 py-1 text-xs font-medium text-emerald-300">{t("live")}</span>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <span>{t("legacyApi")}</span>
-                <span className="rounded-full bg-amber-500/15 px-2 py-1 text-xs font-medium text-amber-300">{t("offline")}</span>
               </div>
               <div className="flex items-center justify-between gap-4">
                 <span>{t("supabaseSchema")}</span>
