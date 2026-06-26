@@ -275,6 +275,7 @@ export const moduleDefinitions: Record<ModuleSlug, ModuleDefinition> = {
       { key: "serialNumber", label: "Serial / IMEI", type: "text", placeholder: "Serial or IMEI" },
       { key: "status", label: "Status", type: "select", required: true, options: deviceStatusOptions },
       { key: "owner", label: "Owner", type: "text", placeholder: "Client, company, or temporary holder" },
+      { key: "imageUrl", label: "Image URL", type: "text", placeholder: "" },
       { key: "notes", label: "Notes", type: "textarea", placeholder: "Condition, accessories, lock state" },
     ],
     columns: [

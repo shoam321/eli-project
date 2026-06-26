@@ -149,6 +149,7 @@ const heOverrides: Record<ModuleSlug, ModuleOverride> = {
       serialNumber: { label: "סריאלי / IMEI", placeholder: "סריאלי או IMEI" },
       status: { label: "סטטוס", options: { client: "לקוח", temporary: "זמני", own: "חברה", deleted: "נמחק" } },
       owner: { label: "בעלים", placeholder: "לקוח, חברה או מחזיק זמני" },
+      imageUrl: { label: "תמונה" },
       notes: { label: "הערות", placeholder: "מצב, אביזרים, נעילה" },
     },
     columns: { brand: "מותג", model: "דגם", status: "סטטוס", owner: "בעלים" },

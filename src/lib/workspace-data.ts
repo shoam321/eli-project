@@ -253,6 +253,7 @@ const moduleStorageAdapters: Record<ModuleSlug, ModuleStorageAdapter> = {
       serialNumber: toText(row.serial_number),
       status: toText(row.device_status),
       owner: toText(row.owner_name),
+      imageUrl: toText(row.image_url),
       notes: toText(row.notes),
     }),
     toRow: (record, userId) => ({
@@ -263,6 +264,7 @@ const moduleStorageAdapters: Record<ModuleSlug, ModuleStorageAdapter> = {
       serial_number: toNullableText(record.serialNumber),
       device_status: toText(record.status),
       owner_name: toNullableText(record.owner),
+      image_url: toNullableText(record.imageUrl),
       notes: toNullableText(record.notes),
       created_at: record.createdAt,
       updated_at: record.updatedAt,
