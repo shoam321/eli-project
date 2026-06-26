@@ -22,7 +22,14 @@ export function createBrowserSupabaseClient() {
 
   const { url, anonKey } = getPublicSupabaseConfig();
 
-  browserSupabaseClient = createClient(url, anonKey);
+  browserSupabaseClient = createClient(url, anonKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+      autoSignIn: false,
+    },
+  });
 
   return browserSupabaseClient;
 }
