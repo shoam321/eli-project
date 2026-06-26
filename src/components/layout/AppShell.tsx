@@ -125,6 +125,3 @@ export default function AppShell({ title, subtitle, activePath, children }: AppS
     </div>
   );
 }
-
-  );
-}

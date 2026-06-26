@@ -218,7 +218,7 @@ export default function OperationsModulePage({ moduleConfig }: OperationsModuleP
             {moduleConfig.fields.map((field) => (
               <label key={field.key} className={field.type === "textarea" ? "md:col-span-2" : ""}>
                 <span className="mb-2 block text-sm font-medium text-slate-700">{field.label}</span>
-                {renderField({ field, draft, onChange: handleFieldChange })}
+                {renderField({ field, draft, onChange: handleFieldChange, t })}
               </label>
             ))}
           </div>
@@ -251,10 +251,12 @@ function renderField({
   field,
   draft,
   onChange,
+  t,
 }: {
   field: ModuleField;
   draft: WorkspaceRecord;
   onChange: (field: ModuleField, value: string | boolean) => void;
+  t: (key: import("@/lib/translations").TranslationKey) => string;
 }) {
   const commonClassName =
     "w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white";
