@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { moduleDefinitions, moduleOrder } from "@/lib/module-config";
-import { readWorkspaceState, type WorkspaceState } from "@/lib/workspace-data";
+import { useWorkspace, useWorkspaceState, type WorkspaceState } from "@/lib/workspace-data";
 
 export default function OperationsDashboard() {
-  const [state, setState] = useState<WorkspaceState | null>(null);
-
-  useEffect(() => {
-    setState(readWorkspaceState());
-  }, []);
+  const { session } = useWorkspace();
+  const state = useWorkspaceState();
 
   const operations = moduleOrder.filter((slug) => moduleDefinitions[slug].navGroup === "operations");
   const references = moduleOrder.filter((slug) => moduleDefinitions[slug].navGroup === "reference");
@@ -27,8 +23,8 @@ export default function OperationsDashboard() {
             </h2>
             <p className="text-sm leading-6 text-slate-600">
               This workspace now exposes projects, clients, suppliers, parts, orders, devices, cashier records,
-              and reference catalogs from the original product surface. Persistence is local for now because the
-              legacy mobile backend is offline and the Supabase business schema has not been provisioned yet.
+              and reference catalogs from the original product surface. Records are now synced through Supabase
+              under the authenticated account for {session?.user.email ?? "your workspace"}.
             </p>
           </div>
           <div className="grid min-w-[16rem] gap-3 rounded-[1.5rem] bg-slate-950 p-4 text-slate-100 shadow-lg">
@@ -44,7 +40,11 @@ export default function OperationsDashboard() {
               </div>
               <div className="flex items-center justify-between gap-4">
                 <span>Supabase schema</span>
-                <span className="rounded-full bg-sky-500/15 px-2 py-1 text-xs font-medium text-sky-300">Pending</span>
+                <span className="rounded-full bg-sky-500/15 px-2 py-1 text-xs font-medium text-sky-300">Live</span>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <span>Authenticated user</span>
+                <span className="rounded-full bg-teal-500/15 px-2 py-1 text-xs font-medium text-teal-300">Connected</span>
               </div>
             </div>
             <Link
@@ -93,7 +93,7 @@ function ModuleSection({
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {slugs.map((slug) => {
-          const module = moduleDefinitions[slug];
+          const moduleConfig = moduleDefinitions[slug];
           const count = state?.[slug]?.length ?? 0;
 
           return (
@@ -105,18 +105,18 @@ function ModuleSection({
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">
-                    {module.navGroup === "operations" ? "Workspace" : "Catalog"}
+                    {moduleConfig.navGroup === "operations" ? "Workspace" : "Catalog"}
                   </p>
                   <h4 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
-                    {module.title}
+                    {moduleConfig.title}
                   </h4>
                 </div>
                 <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700 transition group-hover:bg-teal-50 group-hover:text-teal-700">
                   {count}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-600">{module.description}</p>
-              <p className="mt-4 text-sm font-medium text-slate-700">{module.subtitle}</p>
+              <p className="mt-3 text-sm leading-6 text-slate-600">{moduleConfig.description}</p>
+              <p className="mt-4 text-sm font-medium text-slate-700">{moduleConfig.subtitle}</p>
             </Link>
           );
         })}

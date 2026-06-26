@@ -1,33 +1,24 @@
 import { useMemo, useState } from "react";
 
-import { moduleDefinitions, type ModuleDefinition, type ModuleField } from "@/lib/module-config";
+import { type ModuleDefinition, type ModuleField } from "@/lib/module-config";
 import {
   buildDefaultDraft,
-  deleteWorkspaceRecord,
   filterWorkspaceRecords,
-  readWorkspaceState,
-  upsertWorkspaceRecord,
-  writeWorkspaceState,
+  useWorkspace,
+  useWorkspaceState,
   type WorkspaceRecord,
 } from "@/lib/workspace-data";
 
 type OperationsModulePageProps = {
-  module: ModuleDefinition;
+  moduleConfig: ModuleDefinition;
 };
 
-export default function OperationsModulePage({ module }: OperationsModulePageProps) {
-  const [records, setRecords] = useState<WorkspaceRecord[]>(() => []);
-  const [hydrated, setHydrated] = useState(false);
+export default function OperationsModulePage({ moduleConfig }: OperationsModulePageProps) {
+  const { deleteRecord, isBusy, saveRecord } = useWorkspace();
+  const workspaceState = useWorkspaceState();
   const [query, setQuery] = useState("");
   const [draft, setDraft] = useState<WorkspaceRecord | null>(null);
-
-  useState(() => {
-    if (!hydrated && typeof window !== "undefined") {
-      const state = readWorkspaceState();
-      setRecords(state[module.slug]);
-      setHydrated(true);
-    }
-  });
+  const records = workspaceState[moduleConfig.slug];
 
   const filteredRecords = useMemo(
     () => filterWorkspaceRecords(records, query),
@@ -35,7 +26,7 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
   );
 
   function openCreateForm() {
-    setDraft(buildDefaultDraft(module.slug));
+    setDraft(buildDefaultDraft(moduleConfig.slug));
   }
 
   function openEditForm(record: WorkspaceRecord) {
@@ -57,12 +48,12 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
     });
   }
 
-  function saveDraft() {
+  async function saveDraft() {
     if (!draft) {
       return;
     }
 
-    for (const field of module.fields) {
+    for (const field of moduleConfig.fields) {
       const value = draft[field.key];
 
       if (field.required && String(value ?? "").trim() === "") {
@@ -71,20 +62,24 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
       }
     }
 
-    const nextState = upsertWorkspaceRecord(readWorkspaceState(), module.slug, draft);
-    writeWorkspaceState(nextState);
-    setRecords(nextState[module.slug]);
-    closeForm();
+    try {
+      await saveRecord(moduleConfig.slug, draft);
+      closeForm();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Unable to save this record.");
+    }
   }
 
-  function removeRecord(recordId: string) {
-    if (!window.confirm(`Delete this ${module.title.toLowerCase().slice(0, -1)} record?`)) {
+  async function removeRecord(recordId: string) {
+    if (!window.confirm(`Delete this ${moduleConfig.title.toLowerCase().slice(0, -1)} record?`)) {
       return;
     }
 
-    const nextState = deleteWorkspaceRecord(readWorkspaceState(), module.slug, recordId);
-    writeWorkspaceState(nextState);
-    setRecords(nextState[module.slug]);
+    try {
+      await deleteRecord(moduleConfig.slug, recordId);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Unable to delete this record.");
+    }
   }
 
   return (
@@ -92,8 +87,8 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
       <section className="grid gap-4 lg:grid-cols-[1.4fr_0.8fr]">
         <div className="rounded-[2rem] border border-white/60 bg-white/80 p-6 shadow-[0_30px_120px_-50px_rgba(15,23,42,0.34)] backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">Original Surface</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{module.title}</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">{module.description}</p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{moduleConfig.title}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">{moduleConfig.description}</p>
         </div>
         <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-slate-100 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.75)]">
           <p className="text-xs uppercase tracking-[0.26em] text-teal-300">Workspace Stats</p>
@@ -108,7 +103,7 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
             </div>
             <div className="flex items-center justify-between gap-4">
               <span>Persistence mode</span>
-              <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-teal-200">Local workspace</span>
+              <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-teal-200">Supabase workspace</span>
             </div>
           </div>
         </div>
@@ -121,16 +116,17 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder={`Search ${module.title.toLowerCase()}`}
+              placeholder={`Search ${moduleConfig.title.toLowerCase()}`}
               className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white"
             />
           </div>
           <button
             type="button"
             onClick={openCreateForm}
+            disabled={isBusy}
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
           >
-            Add {singularize(module.title)}
+            Add {singularize(moduleConfig.title)}
           </button>
         </div>
 
@@ -139,7 +135,7 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr>
-                  {module.columns.map((column) => (
+                  {moduleConfig.columns.map((column) => (
                     <th
                       key={column.key}
                       className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.18em] text-slate-500"
@@ -155,14 +151,14 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
               <tbody className="divide-y divide-slate-100 bg-white">
                 {filteredRecords.length === 0 ? (
                   <tr>
-                    <td colSpan={module.columns.length + 1} className="px-4 py-10 text-center text-sm text-slate-500">
-                      {module.emptyMessage}
+                    <td colSpan={moduleConfig.columns.length + 1} className="px-4 py-10 text-center text-sm text-slate-500">
+                      {moduleConfig.emptyMessage}
                     </td>
                   </tr>
                 ) : (
                   filteredRecords.map((record) => (
                     <tr key={record.id} className="align-top">
-                      {module.columns.map((column) => (
+                      {moduleConfig.columns.map((column) => (
                         <td key={column.key} className="px-4 py-4 text-sm text-slate-700">
                           {formatRecordValue(record[column.key])}
                         </td>
@@ -172,13 +168,17 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
                           <button
                             type="button"
                             onClick={() => openEditForm(record)}
+                            disabled={isBusy}
                             className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-teal-300 hover:text-teal-700"
                           >
                             Edit
                           </button>
                           <button
                             type="button"
-                            onClick={() => removeRecord(record.id)}
+                            onClick={() => {
+                              void removeRecord(record.id);
+                            }}
+                            disabled={isBusy}
                             className="rounded-full border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
                           >
                             Delete
@@ -200,7 +200,7 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">Record Editor</p>
               <h3 className="mt-1 text-2xl font-semibold text-slate-900">
-                {draft.id ? `Edit ${singularize(module.title)}` : `Add ${singularize(module.title)}`}
+                {draft.id ? `Edit ${singularize(moduleConfig.title)}` : `Add ${singularize(moduleConfig.title)}`}
               </h3>
             </div>
             <button
@@ -213,7 +213,7 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {module.fields.map((field) => (
+            {moduleConfig.fields.map((field) => (
               <label key={field.key} className={field.type === "textarea" ? "md:col-span-2" : ""}>
                 <span className="mb-2 block text-sm font-medium text-slate-700">{field.label}</span>
                 {renderField({ field, draft, onChange: handleFieldChange })}
@@ -225,13 +225,15 @@ export default function OperationsModulePage({ module }: OperationsModulePagePro
             <button
               type="button"
               onClick={saveDraft}
+              disabled={isBusy}
               className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
             >
-              Save {singularize(module.title)}
+              {isBusy ? "Saving..." : `Save ${singularize(moduleConfig.title)}`}
             </button>
             <button
               type="button"
               onClick={closeForm}
+              disabled={isBusy}
               className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
             >
               Cancel

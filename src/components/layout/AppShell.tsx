@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
 
+import WorkspaceAuthGate from "@/components/auth/WorkspaceAuthGate";
 import { moduleDefinitions, moduleOrder } from "@/lib/module-config";
+import { useWorkspace } from "@/lib/workspace-data";
 
 type AppShellProps = PropsWithChildren<{
   title: string;
@@ -21,6 +23,13 @@ const navItems = [
 ];
 
 export default function AppShell({ title, subtitle, activePath, children }: AppShellProps) {
+  const { isBusy, session, signOut, status } = useWorkspace();
+  const sessionUser = session?.user;
+
+  if (status !== "ready") {
+    return <WorkspaceAuthGate />;
+  }
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(226,232,240,0.65),_transparent_28%),linear-gradient(135deg,_#f8f5ee_0%,_#edf7f6_52%,_#f4efe6_100%)] text-slate-900">
       <div className="mx-auto grid min-h-screen w-full max-w-[1440px] gap-6 px-4 py-4 lg:grid-cols-[280px_1fr] lg:px-6 lg:py-6">
@@ -29,8 +38,12 @@ export default function AppShell({ title, subtitle, activePath, children }: AppS
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-300">iLab Manager</p>
             <h1 className="mt-3 text-2xl font-semibold tracking-tight text-white">Operations Workspace</h1>
             <p className="mt-3 text-sm leading-6 text-slate-300">
-              Restored web control panel for the original mobile product surface.
+              Restored web control panel backed by authenticated Supabase workspace data.
             </p>
+            <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
+              <p className="font-medium text-white">Signed in as</p>
+              <p className="mt-1 break-all">{sessionUser?.email ?? sessionUser?.id ?? "Unknown account"}</p>
+            </div>
           </div>
 
           <nav className="mt-6 space-y-2">
@@ -54,6 +67,17 @@ export default function AppShell({ title, subtitle, activePath, children }: AppS
               );
             })}
           </nav>
+
+          <button
+            type="button"
+            onClick={() => {
+              void signOut();
+            }}
+            disabled={isBusy}
+            className="mt-6 w-full rounded-full border border-white/15 px-4 py-3 text-sm font-medium text-slate-200 transition hover:border-white/30 hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isBusy ? "Working..." : "Sign Out"}
+          </button>
         </aside>
 
         <div className="space-y-6">
@@ -65,7 +89,7 @@ export default function AppShell({ title, subtitle, activePath, children }: AppS
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">{subtitle}</p>
               </div>
               <span className="rounded-full bg-teal-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
-                Local recovery mode
+                Supabase sync
               </span>
             </div>
           </header>

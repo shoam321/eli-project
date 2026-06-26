@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
-
 import AppShell from "@/components/layout/AppShell";
-import { exportWorkspaceState, readWorkspaceState, WORKSPACE_STORAGE_KEY, type WorkspaceState } from "@/lib/workspace-data";
+import { exportWorkspaceState, useWorkspace } from "@/lib/workspace-data";
 
 export default function SettingsPage() {
-  const [state, setState] = useState<WorkspaceState | null>(null);
-
-  useEffect(() => {
-    setState(readWorkspaceState());
-  }, []);
+  const { isBusy, resetWorkspace, session, state } = useWorkspace();
 
   function handleExport() {
-    if (!state) {
-      return;
-    }
-
     const blob = new Blob([exportWorkspaceState(state)], { type: "application/json" });
     const url = window.URL.createObjectURL(blob);
     const anchor = document.createElement("a");
@@ -24,31 +14,32 @@ export default function SettingsPage() {
     window.URL.revokeObjectURL(url);
   }
 
-  function handleReset() {
-    if (!window.confirm("Reset the local workspace data for all restored modules?")) {
+  async function handleReset() {
+    if (!window.confirm("Reset all Supabase workspace records for the signed-in account?")) {
       return;
     }
 
-    window.localStorage.removeItem(WORKSPACE_STORAGE_KEY);
-    const nextState = readWorkspaceState();
-    setState(nextState);
-    window.location.reload();
+    try {
+      await resetWorkspace();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Unable to reset the workspace.");
+    }
   }
 
-  const totalRecords = state ? Object.values(state).reduce((sum, records) => sum + records.length, 0) : 0;
+  const totalRecords = Object.values(state).reduce((sum, records) => sum + records.length, 0);
 
   return (
-    <AppShell title="Settings & Recovery" subtitle="Control the restored web workspace while backend migration is rebuilt." activePath="/settings">
+    <AppShell title="Settings & Recovery" subtitle="Control the authenticated web workspace now that the Supabase schema is live." activePath="/settings">
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <section className="rounded-[2rem] border border-white/60 bg-white/85 p-6 shadow-[0_28px_100px_-52px_rgba(15,23,42,0.35)] backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-700">Backend Reality</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Recovery controls are now in the app.</h2>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">The web workspace is now pointed at Supabase.</h2>
           <div className="mt-4 space-y-4 text-sm leading-6 text-slate-600">
             <p>
-              The original mobile backend endpoint is offline, and the production Supabase project currently exposes the public connection keys but not the full service-role migration surface or the planned business tables.
+              The original mobile backend endpoint is still offline, but the restored web app can now read and write the business tables you provisioned through Supabase Auth and row-level security.
             </p>
             <p>
-              Because of that, the restored web modules persist in your browser so you can use the original operational categories immediately while the production data layer is rebuilt.
+              Each signed-in account gets an isolated workspace through the `owner_user_id = auth.uid()` policies in the schema.
             </p>
           </div>
         </section>
@@ -57,7 +48,7 @@ export default function SettingsPage() {
           <p className="text-xs uppercase tracking-[0.26em] text-teal-300">Workspace Health</p>
           <div className="mt-5 grid gap-3 text-sm text-slate-300">
             <div className="flex items-center justify-between gap-4">
-              <span>Total local records</span>
+              <span>Total synced records</span>
               <span className="text-lg font-semibold text-white">{totalRecords}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
@@ -70,7 +61,13 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center justify-between gap-4">
               <span>Business schema</span>
-              <span className="rounded-full bg-sky-500/15 px-2 py-1 text-xs font-medium text-sky-300">Not provisioned</span>
+              <span className="rounded-full bg-sky-500/15 px-2 py-1 text-xs font-medium text-sky-300">Live</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span>Signed-in operator</span>
+              <span className="truncate rounded-full bg-white/10 px-2 py-1 text-xs font-medium text-white">
+                {session?.user.email ?? "Unknown"}
+              </span>
             </div>
           </div>
         </section>
@@ -79,7 +76,7 @@ export default function SettingsPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">Workspace Persistence</p>
-              <h3 className="mt-1 text-2xl font-semibold text-slate-900">Export or reset your local recovery data</h3>
+              <h3 className="mt-1 text-2xl font-semibold text-slate-900">Export or reset your Supabase-backed workspace</h3>
             </div>
             <div className="flex flex-wrap gap-3">
               <button
@@ -91,10 +88,13 @@ export default function SettingsPage() {
               </button>
               <button
                 type="button"
-                onClick={handleReset}
+                onClick={() => {
+                  void handleReset();
+                }}
+                disabled={isBusy}
                 className="rounded-full border border-rose-200 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
               >
-                Reset Workspace
+                {isBusy ? "Resetting..." : "Reset Workspace"}
               </button>
             </div>
           </div>

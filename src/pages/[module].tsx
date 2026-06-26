@@ -10,9 +10,9 @@ const ModulePage: NextPage = () => {
   const router = useRouter();
   const moduleParam = router.query.module;
   const slug = Array.isArray(moduleParam) ? moduleParam[0] : moduleParam ?? "";
-  const module = getModuleDefinition(slug);
+  const moduleConfig = getModuleDefinition(slug);
 
-  if (!module) {
+  if (!moduleConfig) {
     return (
       <AppShell title="Module Not Found" subtitle="The requested workspace route does not exist.">
         <div className="rounded-[2rem] border border-slate-200 bg-white/85 p-8 shadow-[0_24px_80px_-50px_rgba(15,23,42,0.35)] backdrop-blur">
@@ -32,8 +32,8 @@ const ModulePage: NextPage = () => {
   }
 
   return (
-    <AppShell title={module.title} subtitle={module.subtitle} activePath={`/${module.slug}`}>
-      <OperationsModulePage module={module} />
+    <AppShell title={moduleConfig.title} subtitle={moduleConfig.subtitle} activePath={`/${moduleConfig.slug}`}>
+      <OperationsModulePage moduleConfig={moduleConfig} />
     </AppShell>
   );
 };
