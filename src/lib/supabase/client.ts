@@ -27,7 +27,6 @@ export function createBrowserSupabaseClient() {
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
-      autoSignIn: false,
     },
   });
 
